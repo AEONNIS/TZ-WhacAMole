@@ -504,3 +504,7 @@ MonoBehaviour:
   _content: {fileID: 1152560498}
   _holeTemplate: {fileID: 6581654021116050211, guid: 229b7fb0439aa3342a4c50ca68c15d61, type: 3}
   _gridDimension: 3
+  _entityTemplates:
+  - {fileID: 6818230176605310445, guid: 98a64ddf50d56ad488958d3f0dc5384d, type: 3}
+  - {fileID: 6818230176605310445, guid: d1ea43c0dfae2794482bb3587c1c71ae, type: 3}
+  - {fileID: 6818230176605310445, guid: c09b9ca48d44d604a896c4ca824d5bb2, type: 3}

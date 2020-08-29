@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _relativeSpawnFrequency: 0.2
+  _relativeSpawnFrequency: 0.1
   _deltas: {fileID: 11400000, guid: 50aaa8dede0917d4a94a4977b1cfbf78, type: 2}
 --- !u!222 &6818230176605310446
 CanvasRenderer:

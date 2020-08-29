@@ -20,11 +20,22 @@ namespace WhacAMole.Model
         {
             Fill();
             CalculateAbsoluteSpawnFrequencies();
-
-            for (int i = 0; i < _holes.Count; i++)
-                Spawn();
         }
         #endregion
+
+        public void SpawnAll()
+        {
+            RemoveAll();
+
+            for (int i = 0; i < _holes.Count; i++)
+                GetRandomEmptyHole().Spawn(GetRandomEntityTemplate());
+        }
+
+        private void RemoveAll()
+        {
+            for (int i = 0; i < _holes.Count; i++)
+                _holes[i].Remove();
+        }
 
         private void Fill()
         {
@@ -62,18 +73,14 @@ namespace WhacAMole.Model
                 entity.Init(entity.RelativeSpawnFrequency / sumRelativeSpawnFrequencies);
         }
 
-        private void Spawn()
-        {
-            GetRandomEmptyHole().Spawn(GetRandomEntity());
-        }
-
         private Hole GetRandomEmptyHole()
         {
             List<Hole> emptyHoles = _holes.Where(hole => hole.IsEmpty).ToList();
-            return emptyHoles[Random.Range(0, emptyHoles.Count)];
+            int index = Random.Range(0, emptyHoles.Count);
+            return emptyHoles[index];
         }
 
-        private Entity GetRandomEntity()
+        private Entity GetRandomEntityTemplate()
         {
             float spawn = Random.Range(0f, 1f);
             float sumSpawnFrequencies = 0f;
@@ -83,7 +90,7 @@ namespace WhacAMole.Model
                 sumSpawnFrequencies += _entityTemplates[i].AbsoluteSpawnFrequency;
 
                 if (spawn <= sumSpawnFrequencies)
-                    return Instantiate(_entityTemplates[i]);
+                    return _entityTemplates[i];
             }
 
             return null;

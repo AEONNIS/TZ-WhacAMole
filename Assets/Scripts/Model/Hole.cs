@@ -8,16 +8,18 @@ namespace WhacAMole.Model
 
         public bool IsEmpty => _entity == null;
 
-        public void Spawn(Entity entity)
+        public void Spawn(Entity entityTemplate)
         {
-            entity.transform.SetParent(transform);
-            entity.transform.position = transform.position;
-            _entity = entity;
+            _entity = Instantiate(entityTemplate, transform);
         }
 
         public void Remove()
         {
-            Destroy(_entity.gameObject);
+            if (IsEmpty == false)
+            {
+                Destroy(_entity.gameObject);
+                _entity = null;
+            }
         }
     }
 }

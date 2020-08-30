@@ -10,7 +10,8 @@ namespace WhacAMole.Model
 
         public void Spawn(Entity entityTemplate)
         {
-            _entity = Instantiate(entityTemplate, transform);
+            if (IsEmpty)
+                _entity = Instantiate(entityTemplate, transform);
         }
 
         public void Remove()

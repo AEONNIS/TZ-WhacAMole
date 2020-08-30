@@ -25,9 +25,8 @@ namespace WhacAMole.Model
 
         public void Run()
         {
+            _acceleratingImpulse = Random.Range(_accelerationRange.MinImpulses, _accelerationRange.MaxImpulses);
             SendImpulse();
-            (float min, float max) = _spawnRate.CurrentRange;
-            _timer.StartOff(Random.Range(min, max), SendImpulse);
         }
 
         public void Stop()
@@ -41,15 +40,22 @@ namespace WhacAMole.Model
         private void Accelerate()
         {
             _currentImpulse = 0;
+            _acceleratingImpulse = Random.Range(_accelerationRange.MinImpulses, _accelerationRange.MaxImpulses);
             _spawnRate.Accelerate();
             _residenceTime.Accelerate();
         }
 
         private void SendImpulse()
         {
+            (float minRate, float maxRate) = _spawnRate.CurrentRange;
+            _timer.StartOff(Random.Range(minRate, maxRate), SendImpulse);
+
+            (float minTime, float maxTime) = _residenceTime.CurrentRange;
+            Impulse?.Invoke(Random.Range(minRate, maxRate));
             _currentImpulse++;
-            (float min, float max) = _residenceTime.CurrentRange;
-            Impulse?.Invoke(Random.Range(min, max));
+
+            if (_currentImpulse == _acceleratingImpulse)
+                Accelerate();
         }
     }
 }

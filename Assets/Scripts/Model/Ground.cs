@@ -12,6 +12,7 @@ namespace WhacAMole.Model
         [SerializeField] private Hole _holeTemplate;
         [SerializeField] private int _gridDimension = 3;
         [SerializeField] private RandomEntitySelector _entitySelector;
+        [SerializeField] private Generator _generator;
 
         private List<Hole> _holes = new List<Hole>();
 
@@ -20,12 +21,19 @@ namespace WhacAMole.Model
         {
             Fill();
             _entitySelector.Init();
+            _generator.Init();
+            _generator.Impulse += SpawnRandomEntityInRandomHole;
+        }
+
+        private void Start()
+        {
+            _generator.Run();
         }
         #endregion
 
-        public void SpawnRandomEntityInRandomHole()
+        public void SpawnRandomEntityInRandomHole(float residenceTime)
         {
-            GetRandomEmptyHole().Spawn(_entitySelector.GetRandomEntityTemplate());
+            GetRandomEmptyHole().Spawn(_entitySelector.GetRandomEntityTemplate(), residenceTime);
         }
 
         private void Fill()

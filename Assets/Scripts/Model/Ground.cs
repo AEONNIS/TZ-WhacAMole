@@ -15,6 +15,7 @@ namespace WhacAMole.Model
         [SerializeField] private Generator _generator;
 
         private List<Hole> _holes = new List<Hole>();
+        private Hole _lastHole = null;
 
         #region Unity
         private void Awake()
@@ -22,12 +23,21 @@ namespace WhacAMole.Model
             Fill();
             _entitySelector.Init();
             _generator.Init();
-            _generator.Impulse += SpawnRandomEntityInRandomHole;
         }
 
         private void Start()
         {
             _generator.Run();
+        }
+
+        private void OnEnable()
+        {
+            _generator.Impulse += SpawnRandomEntityInRandomHole;
+        }
+
+        private void OnDisable()
+        {
+            _generator.Impulse -= SpawnRandomEntityInRandomHole;
         }
         #endregion
 
@@ -36,19 +46,17 @@ namespace WhacAMole.Model
             GetRandomEmptyHole().Spawn(_entitySelector.GetRandomEntityTemplate(), residenceTime);
         }
 
+        private void Clear()
+        {
+            _holes.ForEach(hole => Destroy(hole.gameObject));
+            _holes.Clear();
+        }
+
         private void Fill()
         {
             Clear();
             _gridCreator.Create(_gridDimension);
             _holes = CreateHoles();
-        }
-
-        private void Clear()
-        {
-            foreach (Hole hole in _holes)
-                Destroy(hole.gameObject);
-
-            _holes.Clear();
         }
 
         private List<Hole> CreateHoles()
@@ -64,8 +72,13 @@ namespace WhacAMole.Model
         private Hole GetRandomEmptyHole()
         {
             List<Hole> emptyHoles = _holes.Where(hole => hole.IsEmpty).ToList();
-            int index = Random.Range(0, emptyHoles.Count);
-            return emptyHoles[index];
+            Hole newHole = emptyHoles[Random.Range(0, emptyHoles.Count)];
+
+            while (_lastHole == newHole)
+                newHole = emptyHoles[Random.Range(0, emptyHoles.Count)];
+
+            _lastHole = newHole;
+            return newHole;
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-namespace WhacAMole.Model
+namespace WhacAMole.Infrastructure
 {
     public partial class Generator
     {
         [Serializable]
-        private class AccelerationRange
+        private struct AccelerationRange
         {
             [SerializeField] private int _minImpulses;
             [SerializeField] private int _maxImpulses;

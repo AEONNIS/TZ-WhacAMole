@@ -174,7 +174,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ReferenceResolution: {x: 680, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -381,11 +381,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1152560498}
-  - component: {fileID: 1152560502}
-  - component: {fileID: 1152560504}
   - component: {fileID: 1152560505}
   - component: {fileID: 1152560506}
   - component: {fileID: 1152560503}
+  - component: {fileID: 1152560504}
+  - component: {fileID: 1152560502}
   - component: {fileID: 1152560500}
   - component: {fileID: 1152560499}
   - component: {fileID: 1152560501}
@@ -410,11 +410,11 @@ RectTransform:
   m_Father: {fileID: 159544234}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -540}
-  m_SizeDelta: {x: 1080, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 680}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1152560499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,15 +466,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 108
-    m_Right: 108
-    m_Top: 108
-    m_Bottom: 108
+    m_Left: 64
+    m_Right: 64
+    m_Top: 64
+    m_Bottom: 64
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 216, y: 216}
-  m_Spacing: {x: 108, y: 108}
+  m_CellSize: {x: 128.59967, y: 128.59967}
+  m_Spacing: {x: 64, y: 64}
   m_Constraint: 0
   m_ConstraintCount: 3
 --- !u!114 &1152560502
@@ -541,11 +541,17 @@ MonoBehaviour:
   _spawnRate:
     _min: 0.8
     _maxFactor: 2
-    _accelerationStep: -0.1
+    _accelerationStep: -0.05
+    _limiters:
+      _min: 0.15
+      _max: 3
   _residenceTime:
     _min: 0.8
     _maxFactor: 2
-    _accelerationStep: -0.1
+    _accelerationStep: -0.03
+    _limiters:
+      _min: 0.2
+      _max: 3
   _accelerationRange:
     _minImpulses: 8
     _maxImpulses: 12
@@ -595,10 +601,10 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -540}
-  m_SizeDelta: {x: 0, y: -1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 462}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1200236184
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using WhacAMole.Infrastructure;
 using Random = UnityEngine.Random;
 
-namespace WhacAMole.Model
+namespace WhacAMole.Infrastructure
 {
     public partial class Generator : MonoBehaviour
     {
@@ -31,10 +30,10 @@ namespace WhacAMole.Model
 
         public void Stop()
         {
-            _timer.Stop();
-            _currentImpulse = 0;
             _spawnRate.Reset();
             _residenceTime.Reset();
+            _timer.Stop();
+            _currentImpulse = 0;
         }
 
         private void Accelerate()
@@ -51,10 +50,9 @@ namespace WhacAMole.Model
             _timer.StartOff(Random.Range(minRate, maxRate), SendImpulse);
 
             (float minTime, float maxTime) = _residenceTime.CurrentRange;
-            Impulse?.Invoke(Random.Range(minRate, maxRate));
-            _currentImpulse++;
+            Impulse?.Invoke(Random.Range(minTime, maxTime));
 
-            if (_currentImpulse == _acceleratingImpulse)
+            if (++_currentImpulse == _acceleratingImpulse)
                 Accelerate();
         }
     }

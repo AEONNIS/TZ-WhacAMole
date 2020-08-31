@@ -25,6 +25,7 @@ namespace WhacAMole.Model
             {
                 Destroy(_entity.gameObject);
                 _entity = null;
+                _timer.Stop();
             }
         }
     }

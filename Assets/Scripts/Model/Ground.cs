@@ -18,18 +18,6 @@ namespace WhacAMole.Model
         private Hole _lastHole = null;
 
         #region Unity
-        private void Awake()
-        {
-            Fill();
-            _entitySelector.Init();
-            _generator.Init();
-        }
-
-        private void Start()
-        {
-            _generator.Run();
-        }
-
         private void OnEnable()
         {
             _generator.Impulse += SpawnRandomEntityInRandomHole;
@@ -40,6 +28,12 @@ namespace WhacAMole.Model
             _generator.Impulse -= SpawnRandomEntityInRandomHole;
         }
         #endregion
+
+        public void Init()
+        {
+            Fill();
+            _entitySelector.Init();
+        }
 
         public void SpawnRandomEntityInRandomHole(float residenceTime)
         {

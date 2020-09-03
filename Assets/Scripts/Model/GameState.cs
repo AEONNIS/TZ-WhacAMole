@@ -7,16 +7,19 @@ namespace WhacAMole.Model
     {
         [SerializeField] private Ground _ground;
         [SerializeField] private Generator _generator;
-        [SerializeField] private int _initialLivesNumber = 5;
+        [SerializeField] private int _livesNumber = 5;
 
         private int _score = 0;
 
-        #region Unity
-        private void Awake()
+        public void Init(int gridDimension)
         {
-            _ground.Init();
+            _ground.Init(gridDimension);
             _generator.Init();
         }
-        #endregion
+
+        public void FillGround(int gridDimension)
+        {
+            _ground.Fill(gridDimension);
+        }
     }
 }

@@ -10,7 +10,6 @@ namespace WhacAMole.Model
         [SerializeField] private GridCreator _gridCreator;
         [SerializeField] private Transform _content;
         [SerializeField] private Hole _holeTemplate;
-        [SerializeField] private int _gridDimension = 3;
         [SerializeField] private RandomEntitySelector _entitySelector;
         [SerializeField] private Generator _generator;
 
@@ -29,10 +28,17 @@ namespace WhacAMole.Model
         }
         #endregion
 
-        public void Init()
+        public void Init(int gridDimension)
         {
-            Fill();
+            Fill(gridDimension);
             _entitySelector.Init();
+        }
+
+        public void Fill(int gridDimension)
+        {
+            Clear();
+            _gridCreator.Create(gridDimension);
+            _holes = CreateHoles(gridDimension);
         }
 
         public void SpawnRandomEntityInRandomHole(float residenceTime)
@@ -46,18 +52,11 @@ namespace WhacAMole.Model
             _holes.Clear();
         }
 
-        private void Fill()
-        {
-            Clear();
-            _gridCreator.Create(_gridDimension);
-            _holes = CreateHoles();
-        }
-
-        private List<Hole> CreateHoles()
+        private List<Hole> CreateHoles(int gridDimension)
         {
             List<Hole> holes = new List<Hole>();
 
-            for (int i = 0; i < _gridDimension * _gridDimension; i++)
+            for (int i = 0; i < gridDimension * gridDimension; i++)
                 holes.Add(Instantiate(_holeTemplate, _content));
 
             return holes;

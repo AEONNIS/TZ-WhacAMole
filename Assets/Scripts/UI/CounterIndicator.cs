@@ -18,18 +18,15 @@ namespace WhacAMole.UI
             remove => _counter.Decreased -= value;
         }
 
-        public event Action Icreased
+        public event Action Increased
         {
             add => _counter.Increased += value;
             remove => _counter.Decreased -= value;
         }
 
-        #region Unity
-        private void Awake()
-        {
-            SetIndicator(_counter.Value);
-        }
+        public int CounterValue => _counter.Value;
 
+        #region Unity
         private void OnEnable()
         {
             _decreaseButton.onClick.AddListener(Decrease);
@@ -42,6 +39,8 @@ namespace WhacAMole.UI
             _decreaseButton.onClick.RemoveListener(Increase);
         }
         #endregion
+
+        public void Init() => SetIndicator(_counter.Value);
 
         private void Decrease() => SetIndicator(_counter.Decrease());
 

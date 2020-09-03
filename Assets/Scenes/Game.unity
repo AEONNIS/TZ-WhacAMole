@@ -1872,6 +1872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a30e8af4bbf1ac4eadd3cb814ea9390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gridDimension: {fileID: 0}
   _gameState: {fileID: 0}
 --- !u!114 &1200236187
 MonoBehaviour:
@@ -2617,9 +2618,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00bfc1f538e12540a872a8602ca73cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decreaseCounterButton: {fileID: 2075600141}
-  _increaseCounterButton: {fileID: 1488072179}
-  _counter: {fileID: 1682921471}
+  _counter:
+    _value: 3
+    _minLimiter: 2
+    _maxLmiter: 8
+  _decreaseButton: {fileID: 2075600141}
+  _increaseButton: {fileID: 1488072179}
+  _indicator: {fileID: 1682921471}
 --- !u!1 &1838848530
 GameObject:
   m_ObjectHideFlags: 0

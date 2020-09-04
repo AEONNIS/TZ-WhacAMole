@@ -9,6 +9,9 @@ namespace WhacAMole.Infrastructure
         [SerializeField] private GridLayoutGroup _layout;
         [Range(0f, 3f)]
         [SerializeField] private float _cellSpacingFactor = 0.5f;
+        [SerializeField] private Counter _dimension;
+
+        public Counter Dimension => _dimension;
 
         public void Create(int dimension)
         {

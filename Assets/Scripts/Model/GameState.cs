@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using WhacAMole.Infrastructure;
+using WhacAMole.UI;
 
 namespace WhacAMole.Model
 {
@@ -8,18 +9,17 @@ namespace WhacAMole.Model
         [SerializeField] private Ground _ground;
         [SerializeField] private Generator _generator;
         [SerializeField] private int _livesNumber = 5;
+        [SerializeField] private UserInterface _userInterface;
 
         private int _score = 0;
 
-        public void Init(int gridDimension)
+        #region Unity
+        private void Awake()
         {
-            _ground.Init(gridDimension);
+            _ground.Init();
             _generator.Init();
+            _userInterface.Init(_ground.GridDimension);
         }
-
-        public void FillGround(int gridDimension)
-        {
-            _ground.Fill(gridDimension);
-        }
+        #endregion
     }
 }

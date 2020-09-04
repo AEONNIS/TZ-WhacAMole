@@ -10,18 +10,14 @@ namespace WhacAMole.Infrastructure
         [SerializeField] private int _minLimiter = int.MinValue;
         [SerializeField] private int _maxLmiter = int.MaxValue;
 
-        public event Action Decreased;
-        public event Action Increased;
+        public event Action<int> Changed;
 
         public int Value => _value;
 
         public int Decrease()
         {
             if (_value > _minLimiter)
-            {
-                --_value;
-                Decreased?.Invoke();
-            }
+                Changed?.Invoke(--_value);
 
             return _value;
         }
@@ -29,10 +25,7 @@ namespace WhacAMole.Infrastructure
         public int Increase()
         {
             if (_value < _maxLmiter)
-            {
-                ++_value;
-                Increased?.Invoke();
-            }
+                Changed?.Invoke(++_value);
 
             return _value;
         }

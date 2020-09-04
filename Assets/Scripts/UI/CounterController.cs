@@ -1,30 +1,16 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using WhacAMole.Infrastructure;
 
 namespace WhacAMole.UI
 {
-    public class CounterIndicator : MonoBehaviour
+    public class CounterController : MonoBehaviour
     {
-        [SerializeField] private Counter _counter;
         [SerializeField] private Button _decreaseButton;
         [SerializeField] private Button _increaseButton;
         [SerializeField] private Text _indicator;
 
-        public event Action Decreased
-        {
-            add => _counter.Decreased += value;
-            remove => _counter.Decreased -= value;
-        }
-
-        public event Action Increased
-        {
-            add => _counter.Increased += value;
-            remove => _counter.Decreased -= value;
-        }
-
-        public int CounterValue => _counter.Value;
+        private Counter _counter;
 
         #region Unity
         private void OnEnable()
@@ -36,11 +22,15 @@ namespace WhacAMole.UI
         private void OnDisable()
         {
             _decreaseButton.onClick.RemoveListener(Decrease);
-            _decreaseButton.onClick.RemoveListener(Increase);
+            _increaseButton.onClick.RemoveListener(Increase);
         }
         #endregion
 
-        public void Init() => SetIndicator(_counter.Value);
+        public void Init(Counter counter)
+        {
+            _counter = counter;
+            SetIndicator(counter.Value);
+        }
 
         private void Decrease() => SetIndicator(_counter.Decrease());
 

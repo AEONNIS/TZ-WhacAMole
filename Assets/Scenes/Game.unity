@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 76631838}
   - component: {fileID: 76631840}
   m_Layer: 5
-  m_Name: GridDimension_Start
+  m_Name: GridDimensionController_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -426,8 +426,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 691765092}
   - {fileID: 1152560498}
+  - {fileID: 691765092}
   - {fileID: 1200236183}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1322,6 +1322,7 @@ MonoBehaviour:
   _ground: {fileID: 1152560503}
   _generator: {fileID: 691765089}
   _livesNumber: 5
+  _userInterface: {fileID: 1200236186}
 --- !u!224 &691765092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1334,7 +1335,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 159544234}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1575,7 +1576,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 159544234}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1659,6 +1660,10 @@ MonoBehaviour:
   _transform: {fileID: 1152560498}
   _layout: {fileID: 1152560501}
   _cellSpacingFactor: 0.5
+  _dimension:
+    _value: 3
+    _minLimiter: 3
+    _maxLmiter: 5
 --- !u!114 &1152560503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1923,7 +1928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a30e8af4bbf1ac4eadd3cb814ea9390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridDimension: {fileID: 1811882007}
+  _gridDimensionController: {fileID: 1811882007}
   _startButton: {fileID: 228848962}
   _gameState: {fileID: 691765091}
 --- !u!114 &1200236187
@@ -2603,7 +2608,7 @@ GameObject:
   - component: {fileID: 1811882007}
   - component: {fileID: 1811882006}
   m_Layer: 5
-  m_Name: GridDimension
+  m_Name: GridDimensionController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2670,10 +2675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00bfc1f538e12540a872a8602ca73cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _counter:
-    _value: 3
-    _minLimiter: 2
-    _maxLmiter: 8
   _decreaseButton: {fileID: 2075600141}
   _increaseButton: {fileID: 1488072179}
   _indicator: {fileID: 1682921471}

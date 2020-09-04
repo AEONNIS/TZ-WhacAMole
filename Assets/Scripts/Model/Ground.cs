@@ -16,34 +16,38 @@ namespace WhacAMole.Model
         private List<Hole> _holes = new List<Hole>();
         private Hole _lastHole = null;
 
+        public Counter GridDimension => _gridCreator.Dimension;
+
         #region Unity
         private void OnEnable()
         {
+            _gridCreator.Dimension.Changed += Fill;
             _generator.Impulse += SpawnRandomEntityInRandomHole;
         }
 
         private void OnDisable()
         {
+            _gridCreator.Dimension.Changed -= Fill;
             _generator.Impulse -= SpawnRandomEntityInRandomHole;
         }
         #endregion
 
-        public void Init(int gridDimension)
+        public void Init()
         {
-            Fill(gridDimension);
+            Fill(_gridCreator.Dimension.Value);
             _entitySelector.Init();
-        }
-
-        public void Fill(int gridDimension)
-        {
-            Clear();
-            _gridCreator.Create(gridDimension);
-            _holes = CreateHoles(gridDimension);
         }
 
         public void SpawnRandomEntityInRandomHole(float residenceTime)
         {
             GetRandomEmptyHole().Spawn(_entitySelector.GetRandomEntityTemplate(), residenceTime);
+        }
+
+        private void Fill(int gridDimension)
+        {
+            Clear();
+            _gridCreator.Create(gridDimension);
+            _holes = CreateHoles(gridDimension);
         }
 
         private void Clear()

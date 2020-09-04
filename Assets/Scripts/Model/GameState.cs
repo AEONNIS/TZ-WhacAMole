@@ -21,5 +21,9 @@ namespace WhacAMole.Model
             _userInterface.Init(_ground.GridDimension);
         }
         #endregion
+
+        public void StartGame() => _generator.Run();
+
+        public void StopGame() => _generator.Stop();
     }
 }

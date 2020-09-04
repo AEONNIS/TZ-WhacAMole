@@ -32,6 +32,18 @@ namespace WhacAMole.UI
             SetIndicator(counter.Value);
         }
 
+        public void Enable()
+        {
+            _decreaseButton.interactable = false;
+            _increaseButton.interactable = false;
+        }
+
+        public void Disable()
+        {
+            _decreaseButton.interactable = true;
+            _increaseButton.interactable = true;
+        }
+
         private void Decrease() => SetIndicator(_counter.Decrease());
 
         private void Increase() => SetIndicator(_counter.Increase());

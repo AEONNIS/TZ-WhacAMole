@@ -6,7 +6,7 @@ namespace WhacAMole.Infrastructure
     public partial class Generator
     {
         [Serializable]
-        private struct ChangingRange
+        private partial struct ChangingRange
         {
             [SerializeField] private float _min;
             [SerializeField] private float _maxFactor;
@@ -29,16 +29,6 @@ namespace WhacAMole.Infrastructure
             }
 
             public void Reset() => _min = _initialMin;
-
-            [Serializable]
-            private struct Limiters
-            {
-                [SerializeField] private float _min;
-                [SerializeField] private float _max;
-
-                public float Min => _min;
-                public float Max => _max;
-            }
         }
     }
 }

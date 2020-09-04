@@ -571,6 +571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 228848961}
+  - component: {fileID: 228848965}
   - component: {fileID: 228848964}
   - component: {fileID: 228848963}
   - component: {fileID: 228848962}
@@ -682,6 +683,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228848960}
   m_CullTransparentMesh: 0
+--- !u!114 &228848965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228848960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 054db855f0bc3b04cabce065db703541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 228848962}
+  _image: {fileID: 228848963}
+  _text: {fileID: 2128094894}
+  _initState:
+    _buttonColor: {r: 0.29411766, g: 0.65882355, b: 0.36862746, a: 1}
+    _nameColor: {r: 1, g: 0.21399178, b: 0, a: 1}
+    _name: Start
+    _isInitState: 1
+  _changedState:
+    _buttonColor: {r: 1, g: 0.21568628, b: 0, a: 1}
+    _nameColor: {r: 0.29411766, g: 0.65882355, b: 0.36862746, a: 1}
+    _name: Stop
+    _isInitState: 0
 --- !u!1 &232333846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,8 +1318,8 @@ MonoBehaviour:
       _min: 0.2
       _max: 3
   _accelerationRange:
-    _minImpulses: 8
-    _maxImpulses: 12
+    _min: 8
+    _max: 12
   _timer: {fileID: 691765090}
 --- !u!114 &691765090
 MonoBehaviour:
@@ -1929,7 +1955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridDimensionController: {fileID: 1811882007}
-  _startButton: {fileID: 228848962}
+  _startButton: {fileID: 228848965}
   _gameState: {fileID: 691765091}
 --- !u!114 &1200236187
 MonoBehaviour:

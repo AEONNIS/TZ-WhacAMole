@@ -8,7 +8,7 @@ namespace WhacAMole.Infrastructure
     {
         [SerializeField] private ChangingRange _spawnRate;
         [SerializeField] private ChangingRange _residenceTime;
-        [SerializeField] private AccelerationRange _accelerationRange;
+        [SerializeField] private Limiters _accelerationRange;
         [SerializeField] private Timer _timer;
 
         private int _currentImpulse = 0;
@@ -24,7 +24,7 @@ namespace WhacAMole.Infrastructure
 
         public void Run()
         {
-            _acceleratingImpulse = Random.Range(_accelerationRange.MinImpulses, _accelerationRange.MaxImpulses);
+            _acceleratingImpulse = Random.Range((int)_accelerationRange.Min, (int)_accelerationRange.Max);
             SendImpulse();
         }
 
@@ -39,7 +39,7 @@ namespace WhacAMole.Infrastructure
         private void Accelerate()
         {
             _currentImpulse = 0;
-            _acceleratingImpulse = Random.Range(_accelerationRange.MinImpulses, _accelerationRange.MaxImpulses);
+            _acceleratingImpulse = Random.Range((int)_accelerationRange.Min, (int)_accelerationRange.Max);
             _spawnRate.Accelerate();
             _residenceTime.Accelerate();
         }

@@ -34,14 +34,14 @@ namespace WhacAMole.UI
 
         public void Enable()
         {
-            _decreaseButton.interactable = false;
-            _increaseButton.interactable = false;
+            _decreaseButton.interactable = true;
+            _increaseButton.interactable = true;
         }
 
         public void Disable()
         {
-            _decreaseButton.interactable = true;
-            _increaseButton.interactable = true;
+            _decreaseButton.interactable = false;
+            _increaseButton.interactable = false;
         }
 
         private void Decrease() => SetIndicator(_counter.Decrease());

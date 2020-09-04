@@ -12,21 +12,24 @@ namespace WhacAMole.UI
         [SerializeField] private ButtonState _initState;
         [SerializeField] private ButtonState _changedState;
 
-        private bool _inChangedState = false;
+        private bool _isInitState = false;
 
         public void Init(Action initAction, Action changedAction)
         {
             _initState.Init(initAction);
             _changedState.Init(changedAction);
             SetState(_initState);
+            _isInitState = true;
         }
 
         public void ChangeState()
         {
-            if (_inChangedState)
-                SetState(_initState);
-            else
+            if (_isInitState)
                 SetState(_changedState);
+            else
+                SetState(_initState);
+
+            _isInitState = !_isInitState;
         }
 
         private void SetState(ButtonState state)
@@ -34,7 +37,6 @@ namespace WhacAMole.UI
             _image.color = state.ButtonColor;
             _text.color = state.NameColor;
             _text.text = state.Name;
-            _inChangedState = state.IsInitState;
             _button.onClick.RemoveAllListeners();
 
             if (state.Action != null)
@@ -47,14 +49,12 @@ namespace WhacAMole.UI
             [SerializeField] private Color _buttonColor;
             [SerializeField] private Color _nameColor;
             [SerializeField] private string _name;
-            [SerializeField] private bool _isInitState;
 
             private Action _action;
 
             public Color ButtonColor => _buttonColor;
             public Color NameColor => _nameColor;
             public string Name => _name;
-            public bool IsInitState => _isInitState;
             public Action Action => _action;
 
             public void Init(Action action) => _action = action;

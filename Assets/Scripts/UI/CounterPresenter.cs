@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using WhacAMole.Infrastructure;
 
 namespace WhacAMole.UI
 {
-    public class CounterController : MonoBehaviour
+    public class CounterPresenter : MonoBehaviour
     {
         [SerializeField] private Button _decreaseButton;
         [SerializeField] private Button _increaseButton;
-        [SerializeField] private Text _indicator;
+        [SerializeField] private TextMeshProUGUI _indicator;
 
         private Counter _counter;
 

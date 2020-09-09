@@ -1,4 +1,5 @@
-﻿using System;
+﻿using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace WhacAMole.UI
     {
         [SerializeField] private Button _button;
         [SerializeField] private Image _image;
-        [SerializeField] private Text _text;
+        [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private ButtonState _initState;
         [SerializeField] private ButtonState _changedState;
 

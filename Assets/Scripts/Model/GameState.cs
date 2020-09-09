@@ -8,7 +8,7 @@ namespace WhacAMole.Model
     {
         [SerializeField] private Ground _ground;
         [SerializeField] private Generator _generator;
-        [SerializeField] private int _livesNumber = 5;
+        [SerializeField] private int _lifes = 5;
         [SerializeField] private UserInterface _userInterface;
 
         private int _score = 0;

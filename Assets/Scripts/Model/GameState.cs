@@ -44,7 +44,13 @@ namespace WhacAMole.Model
             GameStopped?.Invoke();
         }
 
-        public void LifesChange(int delta)
+        public void Change(Deltas deltas)
+        {
+            LifesChange(deltas.Lifes);
+            ScoresChange(deltas.Scores);
+        }
+
+        private void LifesChange(int delta)
         {
             _lifes += delta;
             LifesChanged?.Invoke(_lifes);
@@ -53,7 +59,7 @@ namespace WhacAMole.Model
                 GameStop();
         }
 
-        public void ScoresChange(int delta)
+        private void ScoresChange(int delta)
         {
             _scores += delta;
             ScoresChanged?.Invoke(_scores);

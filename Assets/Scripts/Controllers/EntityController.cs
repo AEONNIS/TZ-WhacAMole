@@ -11,7 +11,7 @@ namespace WhacAMole.Controllers
         #region Unity
         public void OnPointerClick(PointerEventData eventData)
         {
-            _entity.OnHit();
+            _entity.Hit();
         }
         #endregion
     }

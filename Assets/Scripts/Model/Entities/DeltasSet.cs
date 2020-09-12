@@ -5,10 +5,10 @@ namespace WhacAMole.Model
     [CreateAssetMenu(fileName = "DeltasSet", menuName = "WhacAMole/Model/DeltasSet")]
     public class DeltasSet : ScriptableObject
     {
-        [SerializeField] private Deltas _hitDeltas;
-        [SerializeField] private Deltas _missDeltas;
+        [SerializeField] private Deltas _onHitDeltas;
+        [SerializeField] private Deltas _onHidingDeltas;
 
-        public Deltas HitDeltas => _hitDeltas;
-        public Deltas MissDeltas => _missDeltas;
+        public Deltas OnHitDeltas => _onHitDeltas;
+        public Deltas OnHidingDeltas => _onHidingDeltas;
     }
 }

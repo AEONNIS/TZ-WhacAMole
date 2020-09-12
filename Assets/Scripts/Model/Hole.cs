@@ -24,6 +24,7 @@ namespace WhacAMole.Model
         {
             if (IsEmpty == false)
             {
+                _entity.Hiding();
                 Destroy(_entity.gameObject);
                 _entity = null;
                 _timer.Stop();

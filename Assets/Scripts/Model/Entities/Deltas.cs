@@ -7,11 +7,11 @@ namespace WhacAMole.Model
     public struct Deltas
     {
         [Range(-10, 10)]
-        [SerializeField] private int _score;
+        [SerializeField] private int _scores;
         [Range(-10, 10)]
-        [SerializeField] private int _health;
+        [SerializeField] private int _lifes;
 
-        public int Score => _score;
-        public int Health => _health;
+        public int Scores => _scores;
+        public int Lifes => _lifes;
     }
 }

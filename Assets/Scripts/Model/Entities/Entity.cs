@@ -10,23 +10,27 @@ namespace WhacAMole.Model
         [SerializeField] private DeltasSet _deltas;
 
         private float _absoluteSpawnFrequency;
+        private GameState _gameState;
 
         public float RelativeSpawnFrequency => _relativeSpawnFrequency;
         public float AbsoluteSpawnFrequency => _absoluteSpawnFrequency;
 
-        public void Init(float absoluteSpawnFrequency)
+        public void Init(float absoluteSpawnFrequency, GameState gameState)
         {
             _absoluteSpawnFrequency = absoluteSpawnFrequency;
+            _gameState = gameState;
         }
 
-        public void OnHit()
+        public void Hit()
         {
-            Debug.Log("Hit");
+            if (_gameState != null)
+                _gameState.Change(_deltas.OnHitDeltas);
         }
 
-        public void OnHiding()
+        public void Hiding()
         {
-            Debug.Log("Hiding");
+            if (_gameState != null)
+                _gameState.Change(_deltas.OnHidingDeltas);
         }
     }
 

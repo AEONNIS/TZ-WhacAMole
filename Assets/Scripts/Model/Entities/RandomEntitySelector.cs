@@ -7,6 +7,7 @@ namespace WhacAMole.Model
     public class RandomEntitySelector : MonoBehaviour
     {
         [SerializeField] private List<Entity> _entityTemplates;
+        [SerializeField] private GameState _gameState;
 
         public void Init()
         {
@@ -32,7 +33,7 @@ namespace WhacAMole.Model
         private void CalculateAbsoluteSpawnFrequencies()
         {
             float sumRelativeSpawnFrequencies = _entityTemplates.Select(entity => entity.RelativeSpawnFrequency).Sum();
-            _entityTemplates.ForEach(entity => entity.Init(entity.RelativeSpawnFrequency / sumRelativeSpawnFrequencies));
+            _entityTemplates.ForEach(entity => entity.Init(entity.RelativeSpawnFrequency / sumRelativeSpawnFrequencies, _gameState));
         }
     }
 }

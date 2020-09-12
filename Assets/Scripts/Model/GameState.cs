@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using WhacAMole.Infrastructure;
 using WhacAMole.UI;
 
@@ -8,10 +9,17 @@ namespace WhacAMole.Model
     {
         [SerializeField] private Ground _ground;
         [SerializeField] private Generator _generator;
-        [SerializeField] private int _lifes = 5;
+        [SerializeField] private int _initLifes = 5;
         [SerializeField] private UserInterface _userInterface;
 
-        private int _score = 0;
+        private int _lifes;
+        private int _scores = 0;
+
+        public event Action GameStarted;
+        public event Action GameStopped;
+
+        public event Action<int> LifesChanged;
+        public event Action<int> ScoresChanged;
 
         #region Unity
         private void Awake()
@@ -22,8 +30,33 @@ namespace WhacAMole.Model
         }
         #endregion
 
-        public void StartGame() => _generator.Run();
+        public void GameStart()
+        {
+            _generator.Run();
+            _lifes = _initLifes;
+            _scores = 0;
+            GameStarted?.Invoke();
+        }
 
-        public void StopGame() => _generator.Stop();
+        public void GameStop()
+        {
+            _generator.Stop();
+            GameStopped?.Invoke();
+        }
+
+        public void LifesChange(int delta)
+        {
+            _lifes += delta;
+            LifesChanged?.Invoke(_lifes);
+
+            if (_lifes <= 0)
+                GameStop();
+        }
+
+        public void ScoresChange(int delta)
+        {
+            _scores += delta;
+            ScoresChanged?.Invoke(_scores);
+        }
     }
 }

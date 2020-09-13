@@ -10,7 +10,7 @@ namespace WhacAMole.Model
         [SerializeField] private GridCreator _gridCreator;
         [SerializeField] private Transform _content;
         [SerializeField] private Hole _holeTemplate;
-        [SerializeField] private RandomEntitySelector _entitySelector;
+        [SerializeField] private RandomEntityCreator _entitySelector;
         [SerializeField] private Generator _generator;
 
         private List<Hole> _holes = new List<Hole>();

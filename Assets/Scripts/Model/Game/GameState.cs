@@ -9,17 +9,13 @@ namespace WhacAMole.Model
     {
         [SerializeField] private Ground _ground;
         [SerializeField] private Generator _generator;
-        [SerializeField] private int _initLifes = 5;
+        [SerializeField] private GameDeltas _initDeltas = new GameDeltas(5, 0);
         [SerializeField] private UserInterface _userInterface;
-
-        private int _lifes;
-        private int _scores = 0;
+        private GameDeltas _currentDeltas;
 
         public event Action GameStarted;
         public event Action GameStopped;
-
-        public event Action<int> LifesChanged;
-        public event Action<int> ScoresChanged;
+        public event Action<GameDeltas> StateChanged;
 
         #region Unity
         private void Awake()
@@ -32,9 +28,8 @@ namespace WhacAMole.Model
 
         public void GameStart()
         {
+            _currentDeltas = _initDeltas;
             _generator.Run();
-            _lifes = _initLifes;
-            _scores = 0;
             GameStarted?.Invoke();
         }
 
@@ -44,25 +39,10 @@ namespace WhacAMole.Model
             GameStopped?.Invoke();
         }
 
-        public void Change(Deltas deltas)
+        public void Change(GameDeltas deltas)
         {
-            LifesChange(deltas.Lifes);
-            ScoresChange(deltas.Scores);
-        }
-
-        private void LifesChange(int delta)
-        {
-            _lifes += delta;
-            LifesChanged?.Invoke(_lifes);
-
-            if (_lifes <= 0)
-                GameStop();
-        }
-
-        private void ScoresChange(int delta)
-        {
-            _scores += delta;
-            ScoresChanged?.Invoke(_scores);
+            _currentDeltas.ChangeTo(deltas);
+            StateChanged?.Invoke(_currentDeltas);
         }
     }
 }

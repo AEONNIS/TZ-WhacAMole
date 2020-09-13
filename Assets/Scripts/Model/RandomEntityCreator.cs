@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using WhacAMole.Infrastructure;
 
 namespace WhacAMole.Model
 {
-    public class RandomEntitySelector : MonoBehaviour
+    public class RandomEntityCreator : MonoBehaviour
     {
         [SerializeField] private List<Entity> _entityTemplates;
         [SerializeField] private GameState _gameState;
+        private Pool<Entity> _entities;
 
         public void Init()
         {

@@ -830,10 +830,13 @@ MonoBehaviour:
   _entityTemplates:
   - _entity: {fileID: 6818230176605310445, guid: 98a64ddf50d56ad488958d3f0dc5384d, type: 3}
     _relativeFrequency: 1
+    _absoluteFrequency: 0
   - _entity: {fileID: 6818230176605310445, guid: d1ea43c0dfae2794482bb3587c1c71ae, type: 3}
     _relativeFrequency: 0.1
+    _absoluteFrequency: 0
   - _entity: {fileID: 6818230176605310445, guid: c09b9ca48d44d604a896c4ca824d5bb2, type: 3}
     _relativeFrequency: 0.05
+    _absoluteFrequency: 0
 --- !u!114 &520698147
 MonoBehaviour:
   m_ObjectHideFlags: 0

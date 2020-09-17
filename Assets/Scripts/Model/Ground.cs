@@ -66,7 +66,7 @@ namespace WhacAMole.Model
             {
                 Hole hole = Instantiate(_holeTemplate, _content);
                 hole.Init(_gameState, _entityCreator);
-                holes.Add(Instantiate(_holeTemplate, _content));
+                holes.Add(hole);
             }
 
             return holes;

@@ -11,13 +11,12 @@ namespace WhacAMole.Model
 
         private enum Type { Mole, AntiMole, Leprechaun }
 
-        public string Name { get; private set; }
+        public string Name => _type.ToString();
 
         public void Init(RandomEntityCreator entityCreator, GameState gameState)
         {
             _gameState = gameState;
             _entityCreator = entityCreator;
-            Name = _type.ToString();
         }
 
         public void Hit()

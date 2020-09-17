@@ -29,7 +29,10 @@ namespace WhacAMole.Model
                 sumSpawnFrequencies += entityTemplate.AbsoluteFrequency;
 
                 if ((spawn <= sumSpawnFrequencies))
+                {
                     entity = entityTemplate.Entity;
+                    break;
+                }
             }
 
             return _entityPool.Get(entity, parent);
@@ -46,11 +49,9 @@ namespace WhacAMole.Model
         [Serializable]
         private class EntitySpawnFrequency
         {
-            [SerializeField]
-            private Entity _entity;
+            [SerializeField] private Entity _entity;
             [Range(0f, 1f)]
-            [SerializeField]
-            private float _relativeFrequency;
+            [SerializeField] private float _relativeFrequency;
             private float _absoluteFrequency;
 
             public Entity Entity => _entity;

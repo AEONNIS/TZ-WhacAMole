@@ -1,37 +1,37 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using WhacAMole.Model;
 
 namespace WhacAMole.Infrastructure
 {
-    public class Pool<T> where T : MonoBehaviour
+    public class Pool<T> where T : MonoBehaviour, INameable
     {
-        private readonly List<T> _pool;
+        private readonly List<T> _obects;
         private readonly Transform _content;
 
-        public Pool(List<T> templates, Transform content)
+        public Pool(Transform content)
         {
-            _pool = templates;
+            _obects = new List<T>();
             _content = content;
         }
 
-        public E Get<E>(E example, Transform parent) where E : T
+        public T Get(T template, Transform parent)
         {
-            int index = _pool.FindIndex(obj => obj is E);
+            int index = _obects.FindIndex(obj => obj.Name == template.Name);
 
             if (index != -1)
             {
-                T result = _pool[index];
-                _pool.RemoveAt(index);
-                return SetParentAndState(result, parent, true) as E;
+                T result = _obects[index];
+                _obects.RemoveAt(index);
+                return SetParentAndState(result, parent, true);
             }
             else
             {
-                E result = Object.Instantiate(example, parent);
-                return result;
+                return Object.Instantiate(template, parent);
             }
         }
 
-        public void Return(T obj) => _pool.Add(SetParentAndState(obj, _content, false));
+        public void Return(T obj) => _obects.Add(SetParentAndState(obj, _content, false));
 
         private T SetParentAndState(T obj, Transform parent, bool state)
         {

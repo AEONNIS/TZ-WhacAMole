@@ -40,7 +40,7 @@ namespace WhacAMole.Model
 
         public void SpawnRandomEntityInRandomHole(float residenceTime)
         {
-            GetRandomEmptyHole().Spawn(_entitySelector.GetRandomEntityTemplate(), residenceTime);
+            GetRandomEmptyHole().Spawn(_entitySelector.GetRandomEntity(), residenceTime);
         }
 
         private void Fill(int gridDimension)

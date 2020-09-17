@@ -6,8 +6,8 @@ namespace WhacAMole.Model
     {
         [SerializeField] private EntityDeltasSet _deltasSet;
         [SerializeField] private Type _type;
-        private RandomEntityCreator _entityCreator;
         private GameState _gameState;
+        private RandomEntityCreator _entityCreator;
 
         private enum Type { Mole, AntiMole, Leprechaun }
 
@@ -15,8 +15,8 @@ namespace WhacAMole.Model
 
         public void Init(RandomEntityCreator entityCreator, GameState gameState)
         {
-            _entityCreator = entityCreator;
             _gameState = gameState;
+            _entityCreator = entityCreator;
             Name = _type.ToString();
         }
 

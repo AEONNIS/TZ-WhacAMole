@@ -834,7 +834,6 @@ MonoBehaviour:
     _relativeFrequency: 0.1
   - _entity: {fileID: 6818230176605310445, guid: c09b9ca48d44d604a896c4ca824d5bb2, type: 3}
     _relativeFrequency: 0.05
-  _gameState: {fileID: 520698150}
 --- !u!114 &520698147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,8 +849,9 @@ MonoBehaviour:
   _gridCreator: {fileID: 520698145}
   _content: {fileID: 520698138}
   _holeTemplate: {fileID: 6581654021116050211, guid: 229b7fb0439aa3342a4c50ca68c15d61, type: 3}
-  _entitySelector: {fileID: 520698146}
+  _entityCreator: {fileID: 520698146}
   _generator: {fileID: 520698149}
+  _gameState: {fileID: 520698150}
 --- !u!114 &520698148
 MonoBehaviour:
   m_ObjectHideFlags: 0

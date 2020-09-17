@@ -10,13 +10,12 @@ namespace WhacAMole.Model
     public class RandomEntityCreator : MonoBehaviour
     {
         [SerializeField] private List<EntitySpawnFrequency> _entityTemplates;
-        [SerializeField] private GameState _gameState;
-        private Pool<Entity> _entityPoll;
+        private Pool<Entity> _entityPool;
 
         public void Init()
         {
             CalculateAbsoluteSpawnFrequencies();
-            _entityPoll = new Pool<Entity>(transform);
+            _entityPool = new Pool<Entity>(transform);
         }
 
         public Entity GetRandomEntity(Transform parent)
@@ -33,11 +32,10 @@ namespace WhacAMole.Model
                     entity = entityTemplate.Entity;
             }
 
-            entity.Init(this, _gameState);
-            return _entityPoll.Get(entity, parent);
+            return _entityPool.Get(entity, parent);
         }
 
-        public void RemoveEntity(Entity entity) => _entityPoll.Return(entity);
+        public void RemoveEntity(Entity entity) => _entityPool.Return(entity);
 
         private void CalculateAbsoluteSpawnFrequencies()
         {

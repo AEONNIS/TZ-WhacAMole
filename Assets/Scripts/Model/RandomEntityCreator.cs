@@ -33,7 +33,7 @@ namespace WhacAMole.Model
                     entity = entityTemplate.Entity;
             }
 
-            entity.Init();
+            entity.Init(this, _gameState);
             return _entityPoll.Get(entity, parent);
         }
 
@@ -42,15 +42,17 @@ namespace WhacAMole.Model
         private void CalculateAbsoluteSpawnFrequencies()
         {
             float sumRelativeFrequencies = _entityTemplates.Select(entityTemplate => entityTemplate.RelativeFrequency).Sum();
-            _entityTemplates.ForEach(entity => entity.Init(entity.RelativeFrequency / sumRelativeFrequencies));
+            _entityTemplates.ForEach(entityTemplate => entityTemplate.Init(entityTemplate.RelativeFrequency / sumRelativeFrequencies));
         }
 
         [Serializable]
-        private struct EntitySpawnFrequency
+        private class EntitySpawnFrequency
         {
-            [SerializeField] private Entity _entity;
+            [SerializeField]
+            private Entity _entity;
             [Range(0f, 1f)]
-            [SerializeField] private float _relativeFrequency;
+            [SerializeField]
+            private float _relativeFrequency;
             private float _absoluteFrequency;
 
             public Entity Entity => _entity;

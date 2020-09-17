@@ -18,16 +18,14 @@ namespace WhacAMole.UI
         {
             _gameState.GameStarted += OnGameStarted;
             _gameState.GameStopped += OnGameStopped;
-            _gameState.LifesChanged += OnLifesChanged;
-            _gameState.ScoresChanged += OnScoresChanged;
+            _gameState.StateChanged += OnStateChanged;
         }
 
         private void OnDisable()
         {
             _gameState.GameStarted -= OnGameStarted;
             _gameState.GameStopped -= OnGameStopped;
-            _gameState.LifesChanged -= OnLifesChanged;
-            _gameState.ScoresChanged -= OnScoresChanged;
+            _gameState.StateChanged -= OnStateChanged;
         }
         #endregion
 
@@ -53,8 +51,10 @@ namespace WhacAMole.UI
             _startGameButton.ChangeState();
         }
 
-        private void OnLifesChanged(int lifes) => _lifesPresenter.text = lifes.ToString();
-
-        private void OnScoresChanged(int scores) => _scoresPrsenter.text = scores.ToString();
+        private void OnStateChanged(GameDeltas state)
+        {
+            _lifesPresenter.text = state.Lifes.ToString();
+            _scoresPrsenter.text = state.Scores.ToString();
+        }
     }
 }

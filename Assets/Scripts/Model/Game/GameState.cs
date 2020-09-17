@@ -9,9 +9,9 @@ namespace WhacAMole.Model
     {
         [SerializeField] private Ground _ground;
         [SerializeField] private Generator _generator;
-        [SerializeField] private GameDeltas _initDeltas = new GameDeltas(5, 0);
+        [SerializeField] private GameDeltas _initState = new GameDeltas(5, 0);
         [SerializeField] private UserInterface _userInterface;
-        private GameDeltas _currentDeltas;
+        private GameDeltas _currentState;
 
         public event Action GameStarted;
         public event Action GameStopped;
@@ -28,7 +28,7 @@ namespace WhacAMole.Model
 
         public void GameStart()
         {
-            _currentDeltas = _initDeltas;
+            _currentState = _initState;
             _generator.Run();
             GameStarted?.Invoke();
         }
@@ -41,8 +41,8 @@ namespace WhacAMole.Model
 
         public void Change(GameDeltas deltas)
         {
-            _currentDeltas.ChangeTo(deltas);
-            StateChanged?.Invoke(_currentDeltas);
+            _currentState.ChangeTo(deltas);
+            StateChanged?.Invoke(_currentState);
         }
     }
 }

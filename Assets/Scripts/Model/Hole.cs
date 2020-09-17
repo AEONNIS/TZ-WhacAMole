@@ -11,11 +11,11 @@ namespace WhacAMole.Model
 
         public bool IsEmpty => _entity == null;
 
-        public void Spawn(Entity entityTemplate, float residenceTime)
+        public void Spawn(Entity entity, float residenceTime)
         {
             if (IsEmpty)
             {
-                _entity = Instantiate(entityTemplate, transform);
+                _entity = Instantiate(entity, transform);
                 _timer.StartOff(residenceTime, Remove);
             }
         }

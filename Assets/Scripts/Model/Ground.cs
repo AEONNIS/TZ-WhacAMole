@@ -14,6 +14,7 @@ namespace WhacAMole.Model
         [SerializeField] private Generator _generator;
         [SerializeField] private GameState _gameState;
 
+        private Pool<Hole> _holePool;
         private List<Hole> _holes = new List<Hole>();
         private Hole _lastHole = null;
 
@@ -35,6 +36,7 @@ namespace WhacAMole.Model
 
         public void Init()
         {
+            _holePool = new Pool<Hole>(_content);
             Fill(_gridCreator.Dimension.Value);
             _entityCreator.Init();
         }
@@ -54,7 +56,7 @@ namespace WhacAMole.Model
 
         private void Clear()
         {
-            _holes.ForEach(hole => Destroy(hole.gameObject));
+            _holes.ForEach(hole => _holePool.Return(hole));
             _holes.Clear();
         }
 
@@ -64,7 +66,7 @@ namespace WhacAMole.Model
 
             for (int i = 0; i < gridDimension * gridDimension; i++)
             {
-                Hole hole = Instantiate(_holeTemplate, _content);
+                Hole hole = _holePool.Get(_holeTemplate, _content);
                 hole.Init(_gameState, _entityCreator);
                 holes.Add(hole);
             }

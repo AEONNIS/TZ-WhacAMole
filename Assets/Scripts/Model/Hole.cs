@@ -3,7 +3,7 @@ using WhacAMole.Infrastructure;
 
 namespace WhacAMole.Model
 {
-    public class Hole : MonoBehaviour
+    public class Hole : MonoBehaviour, INameable
     {
         [SerializeField] private Timer _timer;
 
@@ -13,6 +13,7 @@ namespace WhacAMole.Model
         private Entity _entity = null;
 
         public bool IsEmpty => _entity == null;
+        public string Name => nameof(Hole);
 
         public void Init(GameState gameState, RandomEntityCreator entityCreator)
         {

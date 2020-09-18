@@ -18,7 +18,6 @@ namespace WhacAMole.Infrastructure
         public T Get(T template, Transform parent)
         {
             int index = _obects.FindIndex(obj => obj.Name == template.Name);
-            Debug.Log(template.Name);
 
             if (index != -1)
             {

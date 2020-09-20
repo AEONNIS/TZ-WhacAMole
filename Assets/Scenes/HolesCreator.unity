@@ -525,11 +525,11 @@ MonoBehaviour:
   _baseScaler: {fileID: 683832819}
   _ground: {fileID: 1768321535}
   _holeTemplate: {fileID: 6241706920682950951, guid: 5a8515e837f888545bbaf89b7d53d87d, type: 3}
-  _holeSettings:
+  _holesSettings:
     _count: 100
-    _diameter: 100
+    _diameterRange: {x: 90, y: 110}
     _minEdgeDistance: 0
     _minDistanceBetween: 0
-    _maxAttemptsToFindPosition: 300
+    _maxAttemptsToFindPosition: 100
     _creationImpossibilityMessage: it is impossible to create a hole with the given
       settings

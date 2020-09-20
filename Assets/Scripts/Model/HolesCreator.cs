@@ -11,27 +11,32 @@ namespace WhacAMole.Model
         [SerializeField] private CanvasScaler _baseScaler;
         [SerializeField] private RectTransform _ground;
         [SerializeField] private TestHole _holeTemplate;
-        [SerializeField] private HolesSettings _holesSettings;
+        [SerializeField] private HolesSettings _settings;
         private List<TestHole> _holes = new List<TestHole>();
 
         #region Unity
         private void Awake()
         {
-            for (int i = 0; i <= _holesSettings.Count; i++)
+            for (int i = 0; i <= _settings.Count; i++)
             {
-                HoleParameters holeParameters = new HoleParameters(_baseScaler, _holesSettings, _holes);
+                HoleParameters parameters = new HoleParameters(_baseScaler, _settings, _holes);
 
-                if (holeParameters.IsValid)
-                    Create(holeParameters.Position, holeParameters.Diameter);
+                if (parameters.IsValid)
+                {
+                    _holes.Add(Create(_holeTemplate, _ground, parameters.Position, parameters.Diameter));
+                }
                 else
-                    Debug.LogWarning($"({_holes.Count}: ){ _holesSettings.CreationImpossibilityMessage}");
+                {
+                    Debug.LogWarning($"({_holes.Count}: ){ _settings.CreationImpossibilityMessage}");
+                    return;
+                }
             }
         }
         #endregion
 
-        public TestHole Create(Vector2 position, float diameter)
+        public TestHole Create(TestHole template, Transform parent, Vector2 position, float diameter)
         {
-            TestHole hole = Instantiate(_holeTemplate, _ground);
+            TestHole hole = Instantiate(template, parent);
             hole.Init(position, diameter);
             return hole;
         }
@@ -58,56 +63,51 @@ namespace WhacAMole.Model
 
         private class HoleParameters
         {
-            private float _radius;
-            private float _diameter;
+            private readonly float _radius;
             private Vector2 _min;
             private Vector2 _max;
             private Vector2? _position;
 
             public HoleParameters(CanvasScaler scaler, HolesSettings settings, List<TestHole> holes)
             {
-                float diameter = Random.Range(settings.DiameterRange.x, settings.DiameterRange.y);
-                _radius = 0.5f * diameter;
-                _diameter = diameter;
+                Diameter = Random.Range(settings.DiameterRange.x, settings.DiameterRange.y);
+                _radius = 0.5f * Diameter;
                 float radiusAndDistance = _radius + settings.MinEdgeDistance;
                 _min = new Vector2(radiusAndDistance, -radiusAndDistance);
                 _max = new Vector2(scaler.referenceResolution.x - radiusAndDistance, -scaler.referenceResolution.y + radiusAndDistance);
-                _position = GetValidPositionIfExists(scaler, settings, holes);
+                _position = GetValidPositionIfExists(settings, holes, _min, _max, _radius);
             }
 
             public bool IsValid => _position.HasValue;
             public Vector2 Position => _position.Value;
-            public float Diameter => _diameter;
+            public float Diameter { get; }
 
-            private Vector2? GetValidPositionIfExists(CanvasScaler scaler, HolesSettings settings, List<TestHole> holes)
+            private Vector2? GetValidPositionIfExists(HolesSettings settings, List<TestHole> holes, Vector2 min, Vector2 max, float radius)
             {
-                Vector2? position = null;
-
                 for (int i = 0; i <= settings.MaxAttemptsToFindPosition; i++)
                 {
-                    position = GetRandomPosition(_min, _max);
-
-                    if (CheckPosition(position.Value, _radius, holes, settings.MinDistanceBetween))
+                    Vector2? position = GetRandomPosition(min, max);
+                    if (CheckPosition(holes, position.Value, radius, settings.MinDistanceBetween))
                         return position;
                 }
 
                 return null;
             }
 
-            private bool CheckPosition(Vector2 position, float radius, List<TestHole> holes, float minDistanceBetween)
+            private bool CheckPosition(List<TestHole> holes, Vector2 position, float radius, float minDistanceBetween)
             {
                 foreach (var hole in holes)
                 {
-                    if (CheckDistanceForMin(position, hole.Position, minDistanceBetween + radius + hole.Radius) == false)
+                    if (DistanceGreaterMin(position, hole.Position, radius + hole.Radius + minDistanceBetween) == false)
                         return false;
                 }
 
                 return true;
             }
 
-            private bool CheckDistanceForMin(Vector2 aPosition, Vector2 bPosition, float minDistance)
+            private bool DistanceGreaterMin(Vector2 aPosition, Vector2 bPosition, float min)
             {
-                return Mathf.Abs((aPosition - bPosition).sqrMagnitude) >= minDistance * minDistance;
+                return Mathf.Abs((aPosition - bPosition).sqrMagnitude) >= min * min;
             }
 
             private Vector2 GetRandomPosition(Vector2 min, Vector2 max)

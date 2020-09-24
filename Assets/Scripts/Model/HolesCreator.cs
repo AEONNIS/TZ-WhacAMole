@@ -8,6 +8,8 @@ namespace WhacAMole.Model
 {
     public class HolesCreator : MonoBehaviour
     {
+        [SerializeField] private Canvas _baseCanvas;
+
         [SerializeField] private CanvasScaler _baseScaler;
         [SerializeField] private RectTransform _ground;
         [SerializeField] private TestHole _holeTemplate;
@@ -17,20 +19,23 @@ namespace WhacAMole.Model
         #region Unity
         private void Awake()
         {
-            for (int i = 0; i <= _settings.Count; i++)
-            {
-                HoleParameters parameters = new HoleParameters(_baseScaler, _settings, _holes);
+            TestHole hole = Instantiate(_holeTemplate, _ground);
+            hole.Init(new Vector2(_baseCanvas.pixelRect.width / _baseCanvas.transform.lossyScale.x, -_baseCanvas.pixelRect.height / _baseCanvas.transform.lossyScale.y), 100);
 
-                if (parameters.IsValid)
-                {
-                    _holes.Add(Create(_holeTemplate, _ground, parameters.Position, parameters.Diameter));
-                }
-                else
-                {
-                    Debug.LogWarning($"({_holes.Count}: ){ _settings.CreationImpossibilityMessage}");
-                    return;
-                }
-            }
+            //for (int i = 0; i <= _settings.Count; i++)
+            //{
+            //    HoleParameters parameters = new HoleParameters(_baseScaler, _settings, _holes);
+
+            //    if (parameters.IsValid)
+            //    {
+            //        _holes.Add(Create(_holeTemplate, _ground, parameters.Position, parameters.Diameter));
+            //    }
+            //    else
+            //    {
+            //        Debug.LogWarning($"({_holes.Count}: ){ _settings.CreationImpossibilityMessage}");
+            //        return;
+            //    }
+            //}
         }
         #endregion
 

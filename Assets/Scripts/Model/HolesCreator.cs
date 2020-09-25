@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace WhacAMole.Model
@@ -9,8 +8,6 @@ namespace WhacAMole.Model
     public class HolesCreator : MonoBehaviour
     {
         [SerializeField] private Canvas _baseCanvas;
-
-        [SerializeField] private CanvasScaler _baseScaler;
         [SerializeField] private RectTransform _ground;
         [SerializeField] private TestHole _holeTemplate;
         [SerializeField] private HolesSettings _settings;
@@ -19,23 +16,20 @@ namespace WhacAMole.Model
         #region Unity
         private void Awake()
         {
-            TestHole hole = Instantiate(_holeTemplate, _ground);
-            hole.Init(new Vector2(_baseCanvas.pixelRect.width / _baseCanvas.transform.lossyScale.x, -_baseCanvas.pixelRect.height / _baseCanvas.transform.lossyScale.y), 100);
+            for (int i = 0; i <= _settings.Count; i++)
+            {
+                HoleParameters parameters = new HoleParameters(_baseCanvas, _settings, _holes);
 
-            //for (int i = 0; i <= _settings.Count; i++)
-            //{
-            //    HoleParameters parameters = new HoleParameters(_baseScaler, _settings, _holes);
-
-            //    if (parameters.IsValid)
-            //    {
-            //        _holes.Add(Create(_holeTemplate, _ground, parameters.Position, parameters.Diameter));
-            //    }
-            //    else
-            //    {
-            //        Debug.LogWarning($"({_holes.Count}: ){ _settings.CreationImpossibilityMessage}");
-            //        return;
-            //    }
-            //}
+                if (parameters.IsValid)
+                {
+                    _holes.Add(Create(_holeTemplate, _ground, parameters.Position, parameters.Diameter));
+                }
+                else
+                {
+                    Debug.LogWarning($"({_holes.Count}: ){ _settings.CreationImpossibilityMessage}");
+                    return;
+                }
+            }
         }
         #endregion
 
@@ -73,13 +67,14 @@ namespace WhacAMole.Model
             private Vector2 _max;
             private Vector2? _position;
 
-            public HoleParameters(CanvasScaler scaler, HolesSettings settings, List<TestHole> holes)
+            public HoleParameters(Canvas canvas, HolesSettings settings, List<TestHole> holes)
             {
                 Diameter = Random.Range(settings.DiameterRange.x, settings.DiameterRange.y);
                 _radius = 0.5f * Diameter;
                 float radiusAndDistance = _radius + settings.MinEdgeDistance;
                 _min = new Vector2(radiusAndDistance, -radiusAndDistance);
-                _max = new Vector2(scaler.referenceResolution.x - radiusAndDistance, -scaler.referenceResolution.y + radiusAndDistance);
+                _max = new Vector2(canvas.pixelRect.width / canvas.transform.lossyScale.x - radiusAndDistance,
+                                  -canvas.pixelRect.height / canvas.transform.lossyScale.y + radiusAndDistance);
                 _position = GetValidPositionIfExists(settings, holes, _min, _max, _radius);
             }
 

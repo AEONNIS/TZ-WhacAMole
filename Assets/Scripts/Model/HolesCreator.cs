@@ -11,14 +11,18 @@ namespace WhacAMole.Model
         [SerializeField] private RectTransform _ground;
         [SerializeField] private TestHole _holeTemplate;
         [SerializeField] private HolesSettings _settings;
+        private Vector2 _canvasSize;
         private List<TestHole> _holes = new List<TestHole>();
+
 
         #region Unity
         private void Awake()
         {
+            _canvasSize = GetCanvasSize(_baseCanvas);
+
             for (int i = 0; i <= _settings.Count; i++)
             {
-                HoleParameters parameters = new HoleParameters(_baseCanvas, _settings, _holes);
+                HoleParameters parameters = new HoleParameters(_canvasSize, _settings, _holes);
 
                 if (parameters.IsValid)
                 {
@@ -40,12 +44,18 @@ namespace WhacAMole.Model
             return hole;
         }
 
+        private Vector2 GetCanvasSize(Canvas canvas)
+        {
+            return new Vector2(canvas.pixelRect.width / canvas.transform.lossyScale.x, -canvas.pixelRect.height / canvas.transform.lossyScale.y);
+        }
+
         [Serializable]
         private class HolesSettings
         {
             [Range(0, 100)]
             [SerializeField] private int _count = 30;
-            [SerializeField] private Vector2 _diameterRange = new Vector2(90, 110);
+            [Tooltip("Relative to the size of the smaller side of the screen/canvas")]
+            [SerializeField] private Vector2 _diameterRangeFactor = new Vector2(0.1f, 0.12f);
             [SerializeField] private float _minEdgeDistance = 0f;
             [SerializeField] private float _minDistanceBetween = 0f;
             [SerializeField] private int _maxAttemptsToFindPosition = 100;
@@ -53,7 +63,7 @@ namespace WhacAMole.Model
             [SerializeField] private string _creationImpossibilityMessage = "it is impossible to create a hole with the given settings";
 
             public int Count => _count;
-            public Vector2 DiameterRange => _diameterRange;
+            public Vector2 DiameterRange => _diameterRangeFactor;
             public float MinEdgeDistance => _minEdgeDistance;
             public float MinDistanceBetween => _minDistanceBetween;
             public int MaxAttemptsToFindPosition => _maxAttemptsToFindPosition;
@@ -67,14 +77,13 @@ namespace WhacAMole.Model
             private Vector2 _max;
             private Vector2? _position;
 
-            public HoleParameters(Canvas canvas, HolesSettings settings, List<TestHole> holes)
+            public HoleParameters(Vector2 canvasSize, HolesSettings settings, List<TestHole> holes)
             {
                 Diameter = Random.Range(settings.DiameterRange.x, settings.DiameterRange.y);
                 _radius = 0.5f * Diameter;
                 float radiusAndDistance = _radius + settings.MinEdgeDistance;
                 _min = new Vector2(radiusAndDistance, -radiusAndDistance);
-                _max = new Vector2(canvas.pixelRect.width / canvas.transform.lossyScale.x - radiusAndDistance,
-                                  -canvas.pixelRect.height / canvas.transform.lossyScale.y + radiusAndDistance);
+                _max = new Vector2(canvasSize.x - radiusAndDistance, canvasSize.y + radiusAndDistance);
                 _position = GetValidPositionIfExists(settings, holes, _min, _max, _radius);
             }
 
